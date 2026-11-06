@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkerParameters
-import com.shishir.aiubportal.MainActivity
 import com.shishir.aiubportal.R
 import com.shishir.aiubportal.settings.SettingsStore
 import kotlinx.coroutines.flow.first
@@ -42,9 +41,8 @@ object NoticeNotifications {
             != PackageManager.PERMISSION_GRANTED && android.os.Build.VERSION.SDK_INT >= 33
         ) return
 
-        val intent = Intent(context, MainActivity::class.java).apply {
-            data = Uri.parse(url ?: "https://www.aiub.edu/category/notices")
-        }
+        /* open the exact notice page in the default browser */
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url ?: "https://www.aiub.edu/category/notices"))
         val pending = PendingIntent.getActivity(
             context, id, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE

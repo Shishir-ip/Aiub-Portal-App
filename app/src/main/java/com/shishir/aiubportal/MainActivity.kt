@@ -1,6 +1,5 @@
 package com.shishir.aiubportal
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,25 +36,11 @@ import com.shishir.aiubportal.portal.PortalScreen
 import com.shishir.aiubportal.settings.SettingsScreen
 import com.shishir.aiubportal.settings.SettingsStore
 import com.shishir.aiubportal.ui.AiubTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-
-/** URL from a tapped notification that should open in the in-app browser. */
-object NoticeNav {
-    val pendingUrl = MutableStateFlow<String?>(null)
-}
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var controller: PortalController
     private lateinit var settingsStore: SettingsStore
-
-    private val fileChooser = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        controller.onFileChooserResult(
-            android.webkit.WebChromeClient.FileChooserParams.parseResult(result.resultCode, result.data)
-        )
-    }
 
     private val notifPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -65,14 +50,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         controller = PortalController(this)
-        controller.fileChooserLauncher = fileChooser
         settingsStore = SettingsStore(applicationContext)
 
         if (android.os.Build.VERSION.SDK_INT >= 33) {
             requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
         }
-
-        handleIntent(intent)
 
         setContent {
             val settings by settingsStore.settings.collectAsState(
@@ -83,6 +65,8 @@ class MainActivity : ComponentActivity() {
                 "auto" -> isSystemInDarkTheme()
                 else -> false
             }
+            /* theme + captcha changes apply live to the open portal page */
+            LaunchedEffect(settings) { controller.updateSettings(settings) }
             AiubTheme(dark = dark) {
                 AppShell(
                     controller = controller,
@@ -92,28 +76,6 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
-        }
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        handleIntent(intent)
-    }
-
-    /**
-     * Notification taps carry the notice URL in intent.data:
-     *  - www.aiub.edu URLs   → opened in the in-app browser tab (AIUB section)
-     *  - portal.aiub.edu URLs → loaded inside the logged-in Portal tab
-     */
-    private fun handleIntent(intent: Intent?) {
-        val url = intent?.data?.toString() ?: return
-        when {
-            url.startsWith("https://portal.aiub.edu") -> {
-                NoticeNav.pendingUrl.value = null
-                controller.webView.post { controller.webView.loadUrl(url) }
-            }
-            url.startsWith("http") -> NoticeNav.pendingUrl.value = url
         }
     }
 
@@ -129,13 +91,6 @@ class MainActivity : ComponentActivity() {
         )
         val backStack by navController.currentBackStackEntryAsState()
         val current = backStack?.destination?.route ?: "portal"
-        val pending by NoticeNav.pendingUrl.collectAsState()
-
-        LaunchedEffect(pending) {
-            if (pending != null) {
-                navController.navigate("website") { launchSingleTop = true }
-            }
-        }
 
         Scaffold(
             bottomBar = {
@@ -144,10 +99,18 @@ class MainActivity : ComponentActivity() {
                         NavigationBarItem(
                             selected = current == route,
                             onClick = {
-                                navController.navigate(route) {
-                                    popUpTo("portal") { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
+                                /* re-tapping a tab always opens that section's main page */
+                                if (current == route) {
+                                    when (route) {
+                                        "portal" -> controller.reload()
+                                        else -> navController.navigate(route) { launchSingleTop = true }
+                                    }
+                                } else {
+                                    navController.navigate(route) {
+                                        popUpTo("portal") { saveState = true }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                 }
                             },
                             icon = { Icon(icon, label) },
@@ -162,12 +125,10 @@ class MainActivity : ComponentActivity() {
                 startDestination = "portal",
                 modifier = Modifier.padding(padding)
             ) {
-                composable("portal") {
-                    PortalScreen(
+                composable("portal") { PortalScreen(
                     controller = controller,
                     onOpenExam = { navController.navigate("exam") }
-                )
-                }
+                ) }
                 composable("notices") { NoticesScreen() }
                 composable("downloads") { DownloadsScreen() }
                 composable("website") { WebsiteScreen(controller = controller) }
