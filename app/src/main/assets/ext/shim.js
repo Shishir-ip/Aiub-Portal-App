@@ -180,13 +180,21 @@
     if (injected) return;
     injected = true;
 
+    var p = path || location.pathname;
+    var isLogin = p === '/' || p.indexOf('/Login') === 0 || p.indexOf('/Account/Login') === 0;
+
+    /* "default" theme: keep the original portal look. The captcha solver
+       still runs on the login page (it is a separate setting). */
+    if ((android.theme || 'night') === 'default') {
+      if (isLogin) addScript(EXT_BASE + loaders.captchaSolver);
+      return;
+    }
+
     addCss(EXT_BASE + 'src/theme.css');
     addCss(EXT_BASE + 'assets/content-ozNVyx55.css');
 
-    var p = path || location.pathname;
-
     /* login page: theme + captcha solver */
-    if (p === '/' || p.indexOf('/Login') === 0 || p.indexOf('/Account/Login') === 0) {
+    if (isLogin) {
       addScript(EXT_BASE + loaders.themeBridge);
       addScript(EXT_BASE + loaders.captchaSolver);
       return;

@@ -33,17 +33,17 @@ object DownloadsRepository {
 
     fun list(context: Context): List<DownloadedFile> {
         val resolver = context.contentResolver
-        val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
+        val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         val projection = arrayOf(
-            MediaStore.Downloads._ID,
-            MediaStore.Downloads.DISPLAY_NAME,
-            MediaStore.Downloads.SIZE,
-            MediaStore.Downloads.DATE_ADDED,
-            MediaStore.Downloads.MIME_TYPE
+            MediaStore.MediaColumns._ID,
+            MediaStore.MediaColumns.DISPLAY_NAME,
+            MediaStore.MediaColumns.SIZE,
+            MediaStore.MediaColumns.DATE_ADDED,
+            MediaStore.MediaColumns.MIME_TYPE
         )
-        val selection = "${MediaStore.Downloads.RELATIVE_PATH}=?"
+        val selection = "${MediaStore.MediaColumns.RELATIVE_PATH}=?"
         val args = arrayOf("$FOLDER_PATH/")
-        val sort = "${MediaStore.Downloads.DATE_ADDED} DESC"
+        val sort = "${MediaStore.MediaColumns.DATE_ADDED} DESC"
 
         val out = ArrayList<DownloadedFile>()
         resolver.query(collection, projection, selection, args, sort)?.use { c ->
@@ -65,7 +65,7 @@ object DownloadsRepository {
 
     fun rename(context: Context, file: DownloadedFile, newName: String): Boolean = try {
         val values = android.content.ContentValues().apply {
-            put(MediaStore.Downloads.DISPLAY_NAME, newName)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, newName)
         }
         context.contentResolver.update(file.uri, values, null, null) > 0
     } catch (e: Exception) {

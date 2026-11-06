@@ -48,9 +48,16 @@ object DownloadHandler {
         else -> "bin"
     }
 
-    /** Downloads [url] into Documents/Aiub Portal; returns the MediaStore uri. */
+    /**
+     * Downloads [url] into Documents/Aiub Portal; returns the MediaStore uri.
+     * blob:/data:/content: sources are fetched inside the page (via the
+     * ACDownload bridge) and arrive as raw bytes.
+     */
     suspend fun download(context: Context, url: String, contentDisposition: String?, mimetype: String?): Uri =
         withContext(Dispatchers.IO) {
+            if (!url.startsWith("http")) {
+                throw IOException("Unsupported download source: " + url.take(60))
+            }
             val name = uniqueName(context, fileNameFrom(url, contentDisposition, mimetype))
 
             val values = ContentValues().apply {
@@ -59,8 +66,8 @@ object DownloadHandler {
                 put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER)
             }
             val resolver = context.contentResolver
-            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
-                ?: throw IOException("Could not create download entry")
+            val uri = resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
+                ?: fallbackFile(context, name, mimetype)
 
             try {
                 val conn = URL(url).openConnection() as HttpURLConnection
@@ -74,11 +81,20 @@ object DownloadHandler {
                         ?: throw IOException("Could not open output stream")
                 }
             } catch (e: Exception) {
-                resolver.delete(uri, null, null)
+                if (uri.toString().startsWith("content:")) resolver.delete(uri, null, null)
                 throw e
             }
             uri
         }
+
+    /** App-specific fallback (always writable): files/Aiub Portal */
+    private fun fallbackFile(context: Context, name: String, mimetype: String?): Uri {
+        val dir = java.io.File(context.getExternalFilesDir(null), "Aiub Portal").apply { mkdirs() }
+        val f = java.io.File(dir, name)
+        return androidx.core.content.FileProvider.getUriForFile(
+            context, context.packageName + ".fileprovider", f
+        ).also { /* the file itself is written by the caller via contentResolver */ }
+    }
 
     private fun uniqueName(context: Context, desired: String): String {
         val resolver = context.contentResolver

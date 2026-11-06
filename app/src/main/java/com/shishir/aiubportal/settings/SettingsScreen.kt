@@ -22,6 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +37,10 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Unit) {
     val settings by store.settings.collectAsState(initial = AppSettings())
     val scope = rememberCoroutineScope()
+    var userField by remember { mutableStateOf<String?>(null) }
+    var passField by remember { mutableStateOf<String?>(null) }
+    val user = userField ?: settings.username
+    val pass = passField ?: settings.password
 
     Column(
         modifier = Modifier
@@ -79,15 +86,21 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
         }
         if (settings.saveLogin) {
             OutlinedTextField(
-                value = settings.username,
-                onValueChange = { v -> scope.launch { store.saveCredentials(v, settings.password) } },
+                value = user,
+                onValueChange = { v ->
+                    userField = v
+                    scope.launch { store.saveCredentials(v, pass.ifBlank { settings.password }) }
+                },
                 label = { Text("Student ID (e.g. 24-59248-3)") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
-                value = settings.password,
-                onValueChange = { v -> scope.launch { store.saveCredentials(settings.username, v) } },
+                value = pass,
+                onValueChange = { v ->
+                    passField = v
+                    scope.launch { store.saveCredentials(user.ifBlank { settings.username }, v) }
+                },
                 label = { Text("Password") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -102,7 +115,11 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
                     scope.launch { store.setAutoLogin(it) }
                 })
             }
-            OutlinedButton(onClick = { scope.launch { store.clearCredentials() } }) {
+            OutlinedButton(onClick = {
+                userField = ""
+                passField = ""
+                scope.launch { store.clearCredentials() }
+            }) {
                 Text("Clear saved details")
             }
         }

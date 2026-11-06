@@ -86,7 +86,7 @@ class PortalController(context: Context) {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 if (url.startsWith("https://portal.aiub.edu")) {
-                    injectCore(view)
+                    injectCore(view, url)
                 }
             }
 
@@ -101,6 +101,12 @@ class PortalController(context: Context) {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
+                if (url.startsWith("https://portal.aiub.edu")) {
+                    /* belt & braces: make sure the shim ran for this page */
+                    view.evaluateJavascript(
+                        "if (window.APXShim && APXShim.injectForPath) APXShim.injectForPath(location.pathname);", null
+                    )
+                }
                 val s = currentSettings
                 sessionKeeper.onPageFinished(view, url, s, s.captchaEnabled)
             }
@@ -136,8 +142,12 @@ class PortalController(context: Context) {
         }
     }
 
-    /** Injected at page start: settings for the shim, then the shim itself. */
-    private fun injectCore(view: WebView) {
+    /**
+     * Injected at page start: the app settings, then the shim script tag.
+     * The shim reads window.ANDROID_SETTINGS when it loads, injects the
+     * extension CSS + page bundles, and re-runs on page finished if needed.
+     */
+    private fun injectCore(view: WebView, url: String) {
         val s = currentSettings
         val androidSettings = JSONObject().apply {
             put("theme", s.theme)
@@ -146,10 +156,13 @@ class PortalController(context: Context) {
         }
         view.evaluateJavascript("window.ANDROID_SETTINGS = ${androidSettings};", null)
         view.evaluateJavascript(
-            "if (window.APXShim && APXShim.setAndroidSettings) APXShim.setAndroidSettings(${androidSettings});", null
-        )
-        view.evaluateJavascript(
-            "if (window.APXShim && APXShim.injectForPath) APXShim.injectForPath(location.pathname);", null
+            "(function(){" +
+                "if (window.__apxInjected) return; window.__apxInjected = true;" +
+                "var s = document.createElement('script');" +
+                "s.src = 'https://appassets.androidplatform.net/assets/ext/shim.js';" +
+                "s.onerror = function(){ console.warn('[AIUB] shim failed to load'); };" +
+                "(document.head || document.documentElement).appendChild(s);" +
+            "})();", null
         )
     }
 
