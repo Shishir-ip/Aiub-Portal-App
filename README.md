@@ -29,9 +29,10 @@ faculty-upload alerts, a GPA dashboard and exam-routine countdowns.
 - 📥 **Downloads manager** — every file you download from the portal lands in
   **Documents/Aiub Portal** on your phone (visible in your Files app) and in the
   app's Downloads screen: open, rename, delete, share, view details.
-- 🎨 **AIUB Portal+ Enhanced look** — the same redesigned portal UI as the
-  browser extension (sidebar profile, cards, restyled navbar) in both light
-  and night themes, applied inside the app.
+- 🌙 **Day / Night / Auto themes** — the Night theme is the same dark theme as
+  the AIUB Portal Dark Mode extension, injected into every portal page with no
+  flash, plus a phone-optimized layout (the desktop sidebar is hidden — the
+  bottom navigation replaces it).
 - 📅 **Exam routine + countdown** — exam schedule with a live countdown to your
   next exam.
 - 🌐 **Official website** — a plain in-app browser tab for www.aiub.edu.

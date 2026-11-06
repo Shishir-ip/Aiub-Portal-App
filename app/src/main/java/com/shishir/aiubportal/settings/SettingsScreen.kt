@@ -50,11 +50,10 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         SectionTitle("Appearance")
-        val options = listOf("default", "night", "light", "auto")
+        val options = listOf("day", "night", "auto")
         val labels = mapOf(
-            "default" to "Default (original portal look)",
-            "night" to "Night — AIUB+ dark theme",
-            "light" to "Light — AIUB+ redesigned look",
+            "day" to "Day — original portal look",
+            "night" to "Night — dark theme",
             "auto" to "Auto (night follows system)"
         )
         options.forEach { option ->
@@ -158,7 +157,7 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
         SectionTitle("About")
         Text(
-            "AIUB Portal App v1.1.0 — an unofficial student app. " +
+            "AIUB Portal App v1.4.0 — an unofficial student app. " +
                 "The captcha solver and all credentials stay on your device. " +
                 "Not affiliated with or endorsed by AIUB.",
             fontSize = 12.sp,

@@ -80,8 +80,8 @@ class MainActivity : ComponentActivity() {
             )
             val dark = when (settings.theme) {
                 "night" -> true
-                "light", "default" -> false
-                else -> isSystemInDarkTheme()
+                "auto" -> isSystemInDarkTheme()
+                else -> false
             }
             AiubTheme(dark = dark) {
                 AppShell(
@@ -170,7 +170,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("notices") { NoticesScreen() }
                 composable("downloads") { DownloadsScreen() }
-                composable("website") { WebsiteScreen() }
+                composable("website") { WebsiteScreen(controller = controller) }
                 composable("settings") {
                     SettingsScreen(store = settingsStore, onNoticesChanged = onNoticesChanged)
                 }

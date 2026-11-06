@@ -12,9 +12,9 @@ import java.util.zip.GZIPInputStream
 
 /**
  * On-device captcha solver. The portal's login captcha is a dotted-font math
- * equation like "19+23=?". The image is preprocessed the same way as the
- * browser extension (4x upscale → threshold → despeckle → blur → re-threshold)
- * and recognized with Tesseract restricted to digits/operators.
+ * equation like "19+23=?". The image is preprocessed exactly like the browser
+ * extension (4x upscale → threshold → despeckle → blur → re-threshold) and
+ * recognized with Tesseract restricted to digits/operators.
  *
  * The parser is strict: anything that is not a clean "num op num" is rejected
  * (the caller refreshes the captcha instead of filling a guessed answer).
@@ -58,7 +58,7 @@ object CaptchaSolver {
         api.setVariable("tessedit_char_whitelist", "0123456789+-=?")
         val text = api.utF8Text.trim()
         api.clear()
-        android.util.Log.d("AiubCaptcha", "OCR read: ${"$"}text")
+        android.util.Log.d("AiubCaptcha", "OCR read: $text")
         return parseMath(text)
     }
 
@@ -67,14 +67,21 @@ object CaptchaSolver {
         val h = source.height * 4
         val bmp = Bitmap.createScaledBitmap(source, w, h, false).copy(Bitmap.Config.ARGB_8888, true)
 
+        // threshold to B/W
         threshold(bmp, 150)
+
+        // despeckle: remove dark blobs smaller than minArea (8-way flood fill)
         despeckle(bmp, minArea = 50)
 
-        val blurred = bmp.copy(Bitmap.Config.ARGB_8888, false)
+        // blur to close dotted-font gaps: scale down then back up (bilinear),
+        // mirroring the extension's ctx.filter = 'blur(2px)'
+        val small = Bitmap.createScaledBitmap(bmp, w / 4, h / 4, true)
         val canvas = Canvas(bmp)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         canvas.drawColor(GColor.WHITE)
-        canvas.drawBitmap(blurred, 0f, 0f, paint)
+        canvas.drawBitmap(small, 0f, 0f, paint)
+
+        // final solidifying threshold
         threshold(bmp, 230)
         return bmp
     }

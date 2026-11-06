@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.shishir.aiubportal.NoticeNav
 
@@ -19,7 +20,7 @@ import com.shishir.aiubportal.NoticeNav
  * the tapped notice URL is loaded here instead (NoticeNav.pendingUrl).
  */
 @Composable
-fun WebsiteScreen() {
+fun WebsiteScreen(controller: com.shishir.aiubportal.portal.PortalController) {
     val pending by NoticeNav.pendingUrl.collectAsState()
     val webView = remember {
         android.webkit.WebView(com.shishir.aiubportal.util.AppContextHolder.get()).apply {
