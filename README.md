@@ -39,7 +39,7 @@ faculty-upload alerts, a GPA dashboard and exam-routine countdowns.
 
 ### ⚡ Install the APK (recommended, 1 minute)
 
-1. **[Download Aiub-Portal-App-v1.0.0.apk](https://github.com/Shishir-ip/Aiub-Portal-App/releases/download/v1.0.0/Aiub-Portal-App-v1.0.0.apk)**
+1. **[Download Aiub-Portal-App-v1.0.1.apk](https://github.com/Shishir-ip/Aiub-Portal-App/releases/download/v1.0.1/Aiub-Portal-App-v1.0.1.apk)**
    from the Releases page.
 2. Open it on your phone (allow "install from unknown sources" if asked).
 3. Open the app → log in once → Settings → enable **Save my login details**

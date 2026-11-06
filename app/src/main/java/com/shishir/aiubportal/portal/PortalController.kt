@@ -24,6 +24,7 @@ class PortalController(context: Context) {
 
     @SuppressLint("SetJavaScriptEnabled")
     val webView: WebView = WebView(context).apply {
+        setBackgroundColor(android.graphics.Color.parseColor("#0e131b"))
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         settings.databaseEnabled = true
@@ -32,6 +33,8 @@ class PortalController(context: Context) {
         settings.userAgentString = settings.userAgentString
             .replace("; wv", "") /* look like a normal browser */
         android.webkit.CookieManager.getInstance().setAcceptCookie(true)
+        android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+        loadUrl("https://portal.aiub.edu/")
 
         webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
