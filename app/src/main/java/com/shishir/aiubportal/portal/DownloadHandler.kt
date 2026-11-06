@@ -61,9 +61,9 @@ object DownloadHandler {
             val name = uniqueName(context, fileNameFrom(url, contentDisposition, mimetype))
 
             val values = ContentValues().apply {
-                put(MediaStore.Downloads.DISPLAY_NAME, name)
-                put(MediaStore.Downloads.MIME_TYPE, mimetype ?: "application/octet-stream")
-                put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER)
+                put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                put(MediaStore.MediaColumns.MIME_TYPE, mimetype ?: "application/octet-stream")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER)
             }
             val resolver = context.contentResolver
             val uri = resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
@@ -102,10 +102,10 @@ object DownloadHandler {
         var n = 1
         while (true) {
             val cursor = resolver.query(
-                MediaStore.Downloads.EXTERNAL_CONTENT_URI,
-                arrayOf(MediaStore.Downloads._ID),
-                "${MediaStore.Downloads.DISPLAY_NAME}=? AND ${MediaStore.Downloads.RELATIVE_PATH}=?",
-                arrayOf(candidate, Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER),
+                MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY),
+                arrayOf(MediaStore.MediaColumns._ID),
+                "${MediaStore.MediaColumns.DISPLAY_NAME}=? AND ${MediaStore.MediaColumns.RELATIVE_PATH}=?",
+                arrayOf(candidate, (Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER + "/")),
                 null
             )
             val exists = cursor?.use { it.count > 0 } ?: false
@@ -119,5 +119,20 @@ object DownloadHandler {
             }
             n++
         }
+    }
+
+    /** Writes raw bytes (from blob/data bridge) into Documents/Aiub Portal. */
+    fun saveBytes(context: Context, bytes: ByteArray, name: String, mimetype: String?): Uri {
+        val clean = if (name.isBlank() || name == "download") "download_${System.currentTimeMillis()}.bin" else name
+        val values = android.content.ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, uniqueName(context, clean))
+            put(MediaStore.MediaColumns.MIME_TYPE, mimetype ?: "application/octet-stream")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/" + FOLDER)
+        }
+        val resolver = context.contentResolver
+        val uri = resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
+            ?: throw IOException("Could not create download entry")
+        resolver.openOutputStream(uri)?.use { it.write(bytes) } ?: throw IOException("Could not open output stream")
+        return uri
     }
 }

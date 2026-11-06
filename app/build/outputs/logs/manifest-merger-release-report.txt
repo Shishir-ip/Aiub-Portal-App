@@ -56,6 +56,7 @@ MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\SHISHIR
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.8] C:\Users\SHISHIR\.gradle\caches\transforms-4\6bef251489f0fc420fa1f568442a9df9\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-android:1.6.8] C:\Users\SHISHIR\.gradle\caches\transforms-4\06c3170746c2eac97a8eec0026d54956\transformed\runtime-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.sqlite:sqlite-framework:2.3.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\83e6a76ffdfc3fd63c1bbc7dfc1ace9b\transformed\sqlite-framework-2.3.0\AndroidManifest.xml:17:1-22:12
+MERGED from [cz.adaptech.tesseract4android:tesseract4android:4.7.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0c3c900b50a8a5bed285900af8a6ee17\transformed\tesseract4android-4.7.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0f311b49bca424a420b7c2ea65cfd17b\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SHISHIR\.gradle\caches\transforms-4\e76f1b767bbdaf61093fe6fdbd88b122\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SHISHIR\.gradle\caches\transforms-4\4e16cc280eaa0a1f5277c41379c36ea2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
@@ -268,6 +269,8 @@ MERGED from [androidx.compose.runtime:runtime-android:1.6.8] C:\Users\SHISHIR\.g
 MERGED from [androidx.compose.runtime:runtime-android:1.6.8] C:\Users\SHISHIR\.gradle\caches\transforms-4\06c3170746c2eac97a8eec0026d54956\transformed\runtime-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.3.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\83e6a76ffdfc3fd63c1bbc7dfc1ace9b\transformed\sqlite-framework-2.3.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.3.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\83e6a76ffdfc3fd63c1bbc7dfc1ace9b\transformed\sqlite-framework-2.3.0\AndroidManifest.xml:20:5-44
+MERGED from [cz.adaptech.tesseract4android:tesseract4android:4.7.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0c3c900b50a8a5bed285900af8a6ee17\transformed\tesseract4android-4.7.0\AndroidManifest.xml:5:5-44
+MERGED from [cz.adaptech.tesseract4android:tesseract4android:4.7.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0c3c900b50a8a5bed285900af8a6ee17\transformed\tesseract4android-4.7.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0f311b49bca424a420b7c2ea65cfd17b\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SHISHIR\.gradle\caches\transforms-4\0f311b49bca424a420b7c2ea65cfd17b\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SHISHIR\.gradle\caches\transforms-4\e76f1b767bbdaf61093fe6fdbd88b122\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41

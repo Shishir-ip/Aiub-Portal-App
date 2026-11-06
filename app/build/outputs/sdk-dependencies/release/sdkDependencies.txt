@@ -1273,6 +1273,19 @@ library {
     value: 1
   }
 }
+library {
+  maven_library {
+    groupId: "cz.adaptech.tesseract4android"
+    artifactId: "tesseract4android"
+    version: "4.7.0"
+  }
+  digests {
+    sha256: "\341\366\324\265\n\361ky\246\035\263\343y\2356\277*FY\245\373L\256\233Q\202\004fS\316\276\305"
+  }
+  repo_index {
+    value: 2
+  }
+}
 library_dependencies {
   library_dep_index: 1
   library_dep_index: 2
@@ -2269,6 +2282,10 @@ library_dependencies {
   library_dep_index: 106
   library_dep_index: 98
 }
+library_dependencies {
+  library_index: 113
+  library_dep_index: 6
+}
 module_dependencies {
   module_name: "base"
   dependency_index: 0
@@ -2285,6 +2302,7 @@ module_dependencies {
   dependency_index: 91
   dependency_index: 98
   dependency_index: 112
+  dependency_index: 113
 }
 repositories {
   maven_repo {
