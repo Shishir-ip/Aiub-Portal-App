@@ -35,6 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +59,8 @@ fun DownloadsScreen() {
 
     fun refresh() { files = DownloadsRepository.list(context); loading = false }
     LaunchedEffect(Unit) { refresh() }
+    val downloadedEvent by com.shishir.aiubportal.portal.DownloadEvents.downloaded.collectAsState()
+    LaunchedEffect(downloadedEvent) { if (downloadedEvent != null) refresh() }
 
     fun open(file: DownloadedFile) {
         val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {

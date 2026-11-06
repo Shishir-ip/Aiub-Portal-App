@@ -650,19 +650,6 @@
       jars="C:\Users\SHISHIR\.gradle\caches\modules-2\files-2.1\org.jsoup\jsoup\1.18.1\cb7cd991d47b44101cbe4655dec611cdc01f8a02\jsoup-1.18.1.jar"
       resolved="org.jsoup:jsoup:1.18.1"/>
   <library
-      name="cz.adaptech.tesseract4android:tesseract4android:4.7.0@aar"
-      jars="C:\Users\SHISHIR\.gradle\caches\transforms-4\0c3c900b50a8a5bed285900af8a6ee17\transformed\tesseract4android-4.7.0\jars\classes.jar"
-      resolved="cz.adaptech.tesseract4android:tesseract4android:4.7.0"
-      folder="C:\Users\SHISHIR\.gradle\caches\transforms-4\0c3c900b50a8a5bed285900af8a6ee17\transformed\tesseract4android-4.7.0"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
       name="org.jetbrains:annotations:23.0.0@jar"
       jars="C:\Users\SHISHIR\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations\23.0.0\8cc20c07506ec18e0834947b84a864bfc094484e\annotations-23.0.0.jar"
       resolved="org.jetbrains:annotations:23.0.0"/>

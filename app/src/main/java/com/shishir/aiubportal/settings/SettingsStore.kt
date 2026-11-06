@@ -22,7 +22,6 @@ data class AppSettings(
     val autoLogin: Boolean = true,
     val noticesEnabled: Boolean = true,
     val noticesIntervalMin: Int = 30,
-    val facultyAlerts: Boolean = true
 )
 
 class SettingsStore(private val context: Context) {
@@ -36,9 +35,7 @@ class SettingsStore(private val context: Context) {
         val AUTO_LOGIN = booleanPreferencesKey("auto_login")
         val NOTICES = booleanPreferencesKey("notices_enabled")
         val NOTICES_INTERVAL = intPreferencesKey("notices_interval_min")
-        val FACULTY_ALERTS = booleanPreferencesKey("faculty_alerts")
         val SEEN_NOTICE_URLS = stringSetPreferencesKey("seen_notice_urls")
-        val SEEN_FACULTY_HASHES = stringSetPreferencesKey("seen_faculty_hashes")
     }
 
     val settings: Flow<AppSettings> = context.dataStore.data.map { p ->
@@ -51,7 +48,6 @@ class SettingsStore(private val context: Context) {
             autoLogin = p[Keys.AUTO_LOGIN] ?: true,
             noticesEnabled = p[Keys.NOTICES] ?: true,
             noticesIntervalMin = p[Keys.NOTICES_INTERVAL] ?: 30,
-            facultyAlerts = p[Keys.FACULTY_ALERTS] ?: true
         )
     }
 
@@ -70,28 +66,14 @@ class SettingsStore(private val context: Context) {
         }
     }
 
-    val seenFacultyHashes: Flow<Set<String>> = context.dataStore.data.map { p ->
-        p[Keys.SEEN_FACULTY_HASHES]?.toSet() ?: emptySet()
-    }
-
-    suspend fun markSeenFacultyHashes(hashes: List<String>) {
-        if (hashes.isEmpty()) return
-        context.dataStore.edit { p ->
-            val old = p[Keys.SEEN_FACULTY_HASHES]?.toMutableSet() ?: mutableSetOf()
-            old.addAll(hashes)
-            if (old.size > 300) p[Keys.SEEN_FACULTY_HASHES] = old.toList().takeLast(300).toSet()
-            else p[Keys.SEEN_FACULTY_HASHES] = old
-        }
-    }
-
     suspend fun current(): AppSettings = settings.first()
 
     suspend fun setTheme(value: String) = context.dataStore.edit { it[Keys.THEME] = value }
     suspend fun setCaptcha(on: Boolean) = context.dataStore.edit { it[Keys.CAPTCHA] = on }
     suspend fun setAutoLogin(on: Boolean) = context.dataStore.edit { it[Keys.AUTO_LOGIN] = on }
+    suspend fun setSaveLogin(on: Boolean) = context.dataStore.edit { it[Keys.SAVE_LOGIN] = on }
     suspend fun setNotices(on: Boolean) = context.dataStore.edit { it[Keys.NOTICES] = on }
     suspend fun setNoticesInterval(min: Int) = context.dataStore.edit { it[Keys.NOTICES_INTERVAL] = min }
-    suspend fun setFacultyAlerts(on: Boolean) = context.dataStore.edit { it[Keys.FACULTY_ALERTS] = on }
 
     suspend fun saveCredentials(username: String, password: String) =
         context.dataStore.edit {

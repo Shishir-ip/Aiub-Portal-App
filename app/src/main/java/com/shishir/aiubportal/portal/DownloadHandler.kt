@@ -7,6 +7,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.webkit.CookieManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -17,6 +18,11 @@ import java.net.URL
  * Documents/Aiub Portal folder so they are visible in the phone's Files app
  * and listed in the app's Downloads screen.
  */
+object DownloadEvents {
+    /** Emitted after each completed download — the Downloads screen refreshes on it. */
+    val downloaded = MutableStateFlow<Uri?>(null)
+}
+
 object DownloadHandler {
 
     const val FOLDER = "Aiub Portal"

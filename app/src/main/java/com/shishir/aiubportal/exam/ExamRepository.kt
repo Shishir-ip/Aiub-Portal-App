@@ -1,7 +1,7 @@
 package com.shishir.aiubportal.exam
 
 import com.shishir.aiubportal.util.Http
-import com.shishir.aiubportal.gpa.SessionGuard
+import com.shishir.aiubportal.util.SessionGuard
 import org.jsoup.Jsoup
 import java.time.LocalDate
 import java.time.LocalDateTime

@@ -22,10 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -37,8 +34,6 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Unit) {
     val settings by store.settings.collectAsState(initial = AppSettings())
     val scope = rememberCoroutineScope()
-    var user by remember(settings.username) { mutableStateOf(settings.username) }
-    var pass by remember(settings.password) { mutableStateOf(settings.password) }
 
     Column(
         modifier = Modifier
@@ -51,9 +46,9 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
         val options = listOf("default", "night", "light", "auto")
         val labels = mapOf(
             "default" to "Default (original portal look)",
-            "night" to "Night — dark theme",
-            "light" to "Light",
-            "auto" to "Auto (follow system)"
+            "night" to "Night — AIUB+ dark theme",
+            "light" to "Light — AIUB+ redesigned look",
+            "auto" to "Auto (night follows system)"
         )
         options.forEach { option ->
             Row(
@@ -79,22 +74,20 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
         SectionTitle("Login details")
-        ToggleRow("Save my login details", settings.saveLogin) {
-            scope.launch {
-                if (it) store.saveCredentials(user, pass) else store.clearCredentials()
-            }
+        ToggleRow("Save my login details (on this device)", settings.saveLogin) {
+            scope.launch { store.setSaveLogin(it) }
         }
         if (settings.saveLogin) {
             OutlinedTextField(
-                value = user,
-                onValueChange = { user = it },
+                value = settings.username,
+                onValueChange = { v -> scope.launch { store.saveCredentials(v, settings.password) } },
                 label = { Text("Student ID (e.g. 24-59248-3)") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
-                value = pass,
-                onValueChange = { pass = it },
+                value = settings.password,
+                onValueChange = { v -> scope.launch { store.saveCredentials(settings.username, v) } },
                 label = { Text("Password") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -146,18 +139,9 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
         }
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-        SectionTitle("Portal alerts")
-        ToggleRow(
-            "Notify when a teacher uploads notes/files (uses your login session)",
-            settings.facultyAlerts
-        ) {
-            scope.launch { store.setFacultyAlerts(it) }
-        }
-
-        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
         SectionTitle("About")
         Text(
-            "AIUB Portal App v1.0.0 — an unofficial student app. " +
+            "AIUB Portal App v1.1.0 — an unofficial student app. " +
                 "The captcha solver and all credentials stay on your device. " +
                 "Not affiliated with or endorsed by AIUB.",
             fontSize = 12.sp,

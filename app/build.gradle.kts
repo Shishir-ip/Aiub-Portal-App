@@ -13,8 +13,8 @@ android {
         applicationId = "com.shishir.aiubportal"
         minSdk = 29
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.1.0"
     }
 
     buildTypes {
@@ -69,5 +69,4 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.1")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("org.jsoup:jsoup:1.18.1")
-    implementation("cz.adaptech.tesseract4android:tesseract4android:4.7.0")
 }

@@ -30,7 +30,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.shishir.aiubportal.downloads.DownloadsScreen
 import com.shishir.aiubportal.exam.ExamScreen
-import com.shishir.aiubportal.gpa.GpaScreen
 import com.shishir.aiubportal.notices.NoticesScreen
 import com.shishir.aiubportal.notices.NoticesWorker
 import com.shishir.aiubportal.portal.PortalController
@@ -50,6 +49,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var controller: PortalController
     private lateinit var settingsStore: SettingsStore
 
+    private val fileChooser = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        controller.onFileChooserResult(
+            android.webkit.WebChromeClient.FileChooserParams.parseResult(result.resultCode, result.data)
+        )
+    }
+
     private val notifPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { }
@@ -58,6 +65,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         controller = PortalController(this)
+        controller.fileChooserLauncher = fileChooser
         settingsStore = SettingsStore(applicationContext)
 
         if (android.os.Build.VERSION.SDK_INT >= 33) {
@@ -156,10 +164,9 @@ class MainActivity : ComponentActivity() {
             ) {
                 composable("portal") {
                     PortalScreen(
-                        controller = controller,
-                        onOpenGpa = { navController.navigate("gpa") },
-                        onOpenExam = { navController.navigate("exam") }
-                    )
+                    controller = controller,
+                    onOpenExam = { navController.navigate("exam") }
+                )
                 }
                 composable("notices") { NoticesScreen() }
                 composable("downloads") { DownloadsScreen() }
@@ -167,7 +174,6 @@ class MainActivity : ComponentActivity() {
                 composable("settings") {
                     SettingsScreen(store = settingsStore, onNoticesChanged = onNoticesChanged)
                 }
-                composable("gpa") { GpaScreen(onBack = { navController.popBackStack() }) }
                 composable("exam") { ExamScreen(onBack = { navController.popBackStack() }) }
             }
         }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,11 +20,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PortalScreen(
-    controller: PortalController,
-    onOpenGpa: () -> Unit,
-    onOpenExam: () -> Unit
-) {
+fun PortalScreen(controller: PortalController, onOpenExam: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         SmallTopAppBar(
             title = { Text("AIUB Portal", style = MaterialTheme.typography.titleMedium) },
@@ -33,9 +28,6 @@ fun PortalScreen(
                 containerColor = MaterialTheme.colorScheme.surface
             ),
             actions = {
-                IconButton(onClick = onOpenGpa) {
-                    Icon(Icons.Filled.BarChart, contentDescription = "GPA dashboard")
-                }
                 IconButton(onClick = onOpenExam) {
                     Icon(Icons.Filled.Event, contentDescription = "Exam routine")
                 }

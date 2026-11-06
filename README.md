@@ -29,8 +29,9 @@ faculty-upload alerts, a GPA dashboard and exam-routine countdowns.
 - 📥 **Downloads manager** — every file you download from the portal lands in
   **Documents/Aiub Portal** on your phone (visible in your Files app) and in the
   app's Downloads screen: open, rename, delete, share, view details.
-- 📊 **GPA dashboard** — your CGPA and every course grade parsed into a native
-  screen with a per-semester average chart.
+- 🎨 **AIUB Portal+ Enhanced look** — the same redesigned portal UI as the
+  browser extension (sidebar profile, cards, restyled navbar) in both light
+  and night themes, applied inside the app.
 - 📅 **Exam routine + countdown** — exam schedule with a live countdown to your
   next exam.
 - 🌐 **Official website** — a plain in-app browser tab for www.aiub.edu.
@@ -39,7 +40,7 @@ faculty-upload alerts, a GPA dashboard and exam-routine countdowns.
 
 ### ⚡ Install the APK (recommended, 1 minute)
 
-1. **[Download Aiub-Portal-App-v1.0.1.apk](https://github.com/Shishir-ip/Aiub-Portal-App/releases/download/v1.0.1/Aiub-Portal-App-v1.0.1.apk)**
+1. **[Download Aiub-Portal-App-v1.1.0.apk](https://github.com/Shishir-ip/Aiub-Portal-App/releases/download/v1.1.0/Aiub-Portal-App-v1.1.0.apk)**
    from the Releases page.
 2. Open it on your phone (allow "install from unknown sources" if asked).
 3. Open the app → log in once → Settings → enable **Save my login details**

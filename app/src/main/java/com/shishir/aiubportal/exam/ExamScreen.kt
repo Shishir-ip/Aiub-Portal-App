@@ -74,6 +74,11 @@ fun ExamScreen(onBack: () -> Unit) {
             when {
                 report == null && error == null -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 error != null -> Text(error!!, color = MaterialTheme.colorScheme.error, modifier = Modifier.align(Alignment.Center))
+                report?.sections?.isEmpty() == true -> Text(
+                    "No exam routine published yet — it appears here before exam season.",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.align(Alignment.Center)
+                )
                 else -> report?.let { rep ->
                     LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         val next = rep.sections.flatMap { it.second }
