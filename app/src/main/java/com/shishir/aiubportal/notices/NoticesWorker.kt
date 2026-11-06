@@ -82,7 +82,7 @@ class NoticesWorker(context: Context, params: WorkerParameters) : CoroutineWorke
                 n.title, "${n.date} · ${n.desc}", n.url
             )
             // small stagger so the group reads well
-            if (fresh.size > 1) kotlinx.coroutines.delay(400 * (index + 1))
+            if (fresh.size > 1) kotlinx.coroutines.delay(400L * (index + 1))
         }
 
         SettingsStore(applicationContext).markSeenNoticeUrls(notices.map { it.url })

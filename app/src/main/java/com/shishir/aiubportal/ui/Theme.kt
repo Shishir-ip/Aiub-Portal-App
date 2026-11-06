@@ -45,7 +45,7 @@ private val LightScheme = lightColorScheme(
 @Composable
 fun AiubTheme(dark: Boolean, content: @Composable () -> Unit) {
     MaterialTheme(
-        colorScheme = if (dark) darkScheme() else lightScheme(),
+        colorScheme = if (dark) DarkScheme else LightScheme,
         content = content
     )
 }

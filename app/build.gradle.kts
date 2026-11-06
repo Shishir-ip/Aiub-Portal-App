@@ -1,3 +1,5 @@
+import java.util.Properties
+import java.io.File
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,6 +21,18 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            /* Signed with the local keystore when gradle-secrets.properties exists
+               (kept out of the repo). Without it the release build stays unsigned. */
+            val secrets = rootProject.file("gradle-secrets.properties")
+            if (secrets.exists()) {
+                val props = Properties().also { p -> secrets.inputStream().use { p.load(it) } }
+                signingConfig = signingConfigs.create("release") {
+                    storeFile = File(props.getProperty("storeFile"))
+                    storePassword = props.getProperty("storePassword")
+                    keyAlias = props.getProperty("keyAlias")
+                    keyPassword = props.getProperty("keyPassword")
+                }
+            }
         }
     }
     compileOptions {

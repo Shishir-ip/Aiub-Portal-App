@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDownload
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
@@ -83,7 +84,7 @@ class MainActivity : ComponentActivity() {
             Triple("portal", "Portal", Icons.Filled.Home),
             Triple("notices", "Notices", Icons.Filled.Notifications),
             Triple("downloads", "Downloads", Icons.Filled.CloudDownload),
-            Triple("website", "AIUB", Icons.Filled.CalendarMonth),
+            Triple("website", "AIUB", Icons.Filled.Info),
             Triple("settings", "Settings", Icons.Filled.Settings)
         )
         val backStack by navController.currentBackStackEntryAsState()

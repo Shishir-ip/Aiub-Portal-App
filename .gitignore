@@ -10,3 +10,8 @@
 local.properties
 *.apk
 *.aab
+
+# Local signing secrets (never commit)
+gradle-secrets.properties
+*.jks
+*.keystore

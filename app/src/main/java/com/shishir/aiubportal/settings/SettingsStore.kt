@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -36,8 +37,8 @@ class SettingsStore(private val context: Context) {
         val NOTICES = booleanPreferencesKey("notices_enabled")
         val NOTICES_INTERVAL = intPreferencesKey("notices_interval_min")
         val FACULTY_ALERTS = booleanPreferencesKey("faculty_alerts")
-        val SEEN_NOTICE_URLS = stringPreferencesKey("seen_notice_urls")
-        val SEEN_FACULTY_HASHES = stringPreferencesKey("seen_faculty_hashes")
+        val SEEN_NOTICE_URLS = stringSetPreferencesKey("seen_notice_urls")
+        val SEEN_FACULTY_HASHES = stringSetPreferencesKey("seen_faculty_hashes")
     }
 
     val settings: Flow<AppSettings> = context.dataStore.data.map { p ->

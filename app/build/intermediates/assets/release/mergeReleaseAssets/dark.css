@@ -1,0 +1,1288 @@
+/* ============================================================================
+   AIUB Portal Dark Mode — dark.css
+   A complete dark theme for https://portal.aiub.edu/
+   Scoped under `html.apdm-dark` so nothing applies unless dark mode is on.
+
+   The portal is built on Bootstrap 3 + the "Drunken Parrot" UI kit +
+   AngularJS, with AIUB brand colors:
+     - navbar border  #1E88E5      navbar links  #2196F3
+     - panel headings #004EA2      panel footers #42A5F5
+     - link cyan      #02baf2      text          #364347
+   Every light surface below is mapped to a navy-tinted dark equivalent.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   0. Design tokens
+   ------------------------------------------------------------------------- */
+html.apdm-dark {
+  color-scheme: dark;
+
+  --apdm-bg:            #0e131b;   /* page background                    */
+  --apdm-surface:       #151c28;   /* cards, panels, login box           */
+  --apdm-surface-2:     #1a2231;   /* table heads, captions, seeAll      */
+  --apdm-elevated:      #1e2839;   /* dropdowns, modals, hovers          */
+  --apdm-input-bg:      #1a2231;   /* text fields                        */
+  --apdm-border:        #2a3547;   /* default borders                    */
+  --apdm-border-strong: #38455c;   /* input / control borders            */
+  --apdm-text:          #e7ecf3;   /* primary text                       */
+  --apdm-text-dim:      #b7c2d2;   /* secondary text                     */
+  --apdm-muted:         #8b9aad;   /* muted text, placeholders           */
+  --apdm-link:          #64b5f6;   /* links (from #2196F3 / #02baf2)     */
+  --apdm-link-hover:    #9cccff;
+  --apdm-cyan:          #38c1f2;   /* drunken-parrot cyan accent         */
+  --apdm-brand:         #0b4a9e;   /* AIUB panel headings (from #004EA2) */
+  --apdm-brand-2:       #1e6fbb;   /* AIUB panel footers (from #42A5F5)  */
+  --apdm-primary:       #1e6bb8;   /* btn-primary                        */
+  --apdm-nav-bg:        #101724;   /* navbar                             */
+}
+
+/* ---------------------------------------------------------------------------
+   1. Base
+   ------------------------------------------------------------------------- */
+html.apdm-dark,
+html.apdm-dark body {
+  background-color: var(--apdm-bg) !important;
+}
+
+html.apdm-dark body {
+  color: var(--apdm-text);
+}
+
+html.apdm-dark h1, html.apdm-dark .h1,
+html.apdm-dark h2, html.apdm-dark .h2,
+html.apdm-dark h3, html.apdm-dark .h3,
+html.apdm-dark h4, html.apdm-dark .h4,
+html.apdm-dark h5, html.apdm-dark .h5,
+html.apdm-dark h6, html.apdm-dark .h6 {
+  color: var(--apdm-text);
+}
+
+html.apdm-dark p,
+html.apdm-dark .panel-body {
+  color: var(--apdm-text-dim);
+}
+
+html.apdm-dark blockquote {
+  border-left-color: var(--apdm-border-strong);
+}
+
+html.apdm-dark blockquote-footer,
+html.apdm-dark blockquote footer {
+  color: var(--apdm-muted);
+}
+/* NOTE: `small` intentionally inherits — the portal uses <small> for titles
+   (e.g. the student name on the profile page). */
+
+html.apdm-dark hr {
+  border-top-color: var(--apdm-border);
+}
+
+html.apdm-dark ::selection {
+  background: var(--apdm-primary);
+  color: #ffffff;
+}
+
+/* Dark scrollbars */
+html.apdm-dark ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+html.apdm-dark ::-webkit-scrollbar-track {
+  background: #10161f;
+}
+html.apdm-dark ::-webkit-scrollbar-thumb {
+  background: #33415c;
+  border: 3px solid #10161f;
+  border-radius: 7px;
+}
+html.apdm-dark ::-webkit-scrollbar-thumb:hover {
+  background: #485979;
+}
+html.apdm-dark ::-webkit-scrollbar-corner {
+  background: #10161f;
+}
+
+/* ---------------------------------------------------------------------------
+   2. Links
+   ------------------------------------------------------------------------- */
+html.apdm-dark a {
+  color: var(--apdm-link);
+}
+html.apdm-dark a:hover,
+html.apdm-dark a:focus {
+  color: var(--apdm-link-hover);
+}
+html.apdm-dark a:focus {
+  outline: 2px solid rgba(100, 181, 246, 0.45);
+  outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   3. Text utilities
+   ------------------------------------------------------------------------- */
+html.apdm-dark .text-muted   { color: var(--apdm-muted) !important; }
+html.apdm-dark .text-primary { color: var(--apdm-link) !important; }
+html.apdm-dark .text-success { color: #7fd68f !important; }
+html.apdm-dark .text-info    { color: #6cc3e8 !important; }
+html.apdm-dark .text-warning { color: #e5c558 !important; }
+html.apdm-dark .text-danger  { color: #f28b8b !important; }
+html.apdm-dark .bg-primary   { background-color: var(--apdm-primary) !important; }
+html.apdm-dark .bg-success   { background-color: #1d3b28 !important; }
+html.apdm-dark .bg-info      { background-color: #16303f !important; }
+html.apdm-dark .bg-warning   { background-color: #3a3114 !important; }
+html.apdm-dark .bg-danger    { background-color: #3f1d1d !important; }
+
+/* ---------------------------------------------------------------------------
+   4. Navbar + notifications
+   ------------------------------------------------------------------------- */
+html.apdm-dark .navbar-default {
+  background-color: var(--apdm-nav-bg);
+  border-color: #1e88e5;
+}
+
+html.apdm-dark .navbar-default .navbar-nav > li > a,
+html.apdm-dark .navbar-default .navbar-link,
+html.apdm-dark .navbar-default .navbar-text,
+html.apdm-dark .navbar-text {
+  color: var(--apdm-link);
+}
+
+html.apdm-dark .navbar-default .navbar-nav > li > a:hover,
+html.apdm-dark .navbar-default .navbar-nav > li > a:focus,
+html.apdm-dark .navbar-default .navbar-link:hover,
+html.apdm-dark .navbar-default .navbar-nav > li > a:active {
+  color: var(--apdm-link-hover);
+  background-color: rgba(100, 181, 246, 0.08);
+}
+
+html.apdm-dark .navbar-default .navbar-nav > .active > a,
+html.apdm-dark .navbar-default .navbar-nav > .active > a:hover,
+html.apdm-dark .navbar-default .navbar-nav > .active > a:focus {
+  color: var(--apdm-link-hover);
+  background-color: rgba(100, 181, 246, 0.12);
+}
+
+html.apdm-dark .navbar-default .navbar-nav > .disabled > a,
+html.apdm-dark .navbar-default .navbar-nav > .disabled > a:hover {
+  color: var(--apdm-muted);
+  background-color: transparent;
+}
+
+html.apdm-dark .navbar-default .navbar-toggle .icon-bar {
+  background-color: var(--apdm-text-dim);
+}
+
+html.apdm-dark .navbar-default .navbar-toggle:hover,
+html.apdm-dark .navbar-default .navbar-toggle:focus {
+  background-color: rgba(100, 181, 246, 0.1);
+}
+
+/* Portal logo: keep the colorful seal readable on the dark navbar by placing
+   it on a light rounded chip (brand colors stay 100% intact). */
+html.apdm-dark .navbar-brand.logo {
+  background-color: #e9eef5;
+  border-radius: 10px;
+  margin-left: 8px;
+  margin-top: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* Notification counter badge (red) stays as-is; dropdown gets darkened. */
+html.apdm-dark #noti_Counter {
+  background: #e1141e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+html.apdm-dark #notifications {
+  background: var(--apdm-elevated);
+  border: solid 1px var(--apdm-border-strong);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.55);
+}
+
+html.apdm-dark #notifications h3 {
+  color: var(--apdm-text);
+  background: transparent;
+  border-bottom: solid 1px var(--apdm-border);
+}
+
+html.apdm-dark #notifications h3 a {
+  color: var(--apdm-link);
+}
+
+/* Notification rows carry an inline `background-color: lightblue` — override
+   it (stylesheet !important always beats a plain inline style). */
+html.apdm-dark [style*="lightblue"] {
+  background-color: #22334a !important;
+  color: #cfe3ff !important;
+}
+
+html.apdm-dark [style*="#3b5998"] {
+  color: #9fc1ff !important;
+}
+
+html.apdm-dark .seeAll {
+  background: var(--apdm-surface-2);
+  border-top: solid 1px var(--apdm-border);
+}
+
+html.apdm-dark .seeAll a,
+html.apdm-dark .seeAll a:hover {
+  color: var(--apdm-link);
+}
+
+/* ---------------------------------------------------------------------------
+   5. Sidebar accordion (#navigation-bar)
+   ------------------------------------------------------------------------- */
+html.apdm-dark .panel-group .panel-heading {
+  background-color: var(--apdm-brand);
+}
+
+html.apdm-dark .panel-group .panel-title a {
+  color: #ffffff;
+}
+
+html.apdm-dark .panel-group .panel-title a:hover,
+html.apdm-dark .panel-group .panel-title a:focus {
+  color: #dceaff;
+}
+
+html.apdm-dark #navigation-bar .list-group-item {
+  background-color: var(--apdm-surface);
+  border-color: var(--apdm-border);
+  color: var(--apdm-text-dim);
+}
+
+html.apdm-dark #navigation-bar .list-group-item:hover,
+html.apdm-dark #navigation-bar .list-group-item:focus {
+  background-color: var(--apdm-elevated);
+  color: var(--apdm-text);
+}
+
+/* ---------------------------------------------------------------------------
+   6. Panels
+   ------------------------------------------------------------------------- */
+html.apdm-dark .panel {
+  background-color: var(--apdm-surface);
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .panel-default {
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .panel-default > .panel-heading {
+  color: #ffffff;
+  background-color: var(--apdm-brand);
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .panel-default > .panel-heading + .panel-collapse > .panel-body,
+html.apdm-dark .panel-default > .panel-footer + .panel-collapse > .panel-body {
+  border-top-color: var(--apdm-border);
+}
+
+html.apdm-dark .panel-footer,
+html.apdm-dark tfoot.table-footer,
+html.apdm-dark .panel-default > .panel-footer {
+  background-color: var(--apdm-brand-2);
+  border-top-color: var(--apdm-border);
+  color: #ffffff;
+}
+
+html.apdm-dark .panel-footer a {
+  color: #ffffff;
+}
+
+html.apdm-dark .panel-primary {
+  border-color: rgba(56, 193, 242, 0.35);
+}
+
+html.apdm-dark .panel-primary > .panel-heading {
+  color: var(--apdm-cyan);
+  background-color: rgba(56, 193, 242, 0.15);
+  border-color: rgba(56, 193, 242, 0.35);
+}
+
+html.apdm-dark .panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: rgba(56, 193, 242, 0.35);
+}
+
+html.apdm-dark .panel-success > .panel-heading,
+html.apdm-dark .panel-info > .panel-heading,
+html.apdm-dark .panel-warning > .panel-heading,
+html.apdm-dark .panel-danger > .panel-heading {
+  color: var(--apdm-text);
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .panel-success > .panel-heading { background-color: #1d3b28; }
+html.apdm-dark .panel-info > .panel-heading    { background-color: #16303f; }
+html.apdm-dark .panel-warning > .panel-heading { background-color: #3a3114; }
+html.apdm-dark .panel-danger > .panel-heading  { background-color: #3f1d1d; }
+
+html.apdm-dark .panel-body {
+  background-color: transparent;
+}
+
+html.apdm-dark .panel-title a {
+  color: inherit;
+}
+
+/* Buttons that live inside blue panel headings (e.g. "Print") */
+html.apdm-dark .panel-heading .btn-primary {
+  color: #eaf3ff;
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+html.apdm-dark .panel-heading .btn-primary:hover,
+html.apdm-dark .panel-heading .btn-primary:focus,
+html.apdm-dark .panel-heading .btn-primary:active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+}
+
+/* ---------------------------------------------------------------------------
+   7. Buttons
+   ------------------------------------------------------------------------- */
+html.apdm-dark .btn {
+  color: var(--apdm-text);
+}
+html.apdm-dark .btn:focus,
+html.apdm-dark .btn.focus {
+  outline: 2px solid rgba(100, 181, 246, 0.5);
+  outline-offset: 1px;
+}
+
+html.apdm-dark .btn-default {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .btn-default:hover,
+html.apdm-dark .btn-default:focus,
+html.apdm-dark .btn-default.focus {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+  border-color: var(--apdm-link);
+}
+
+html.apdm-dark .btn-primary {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+  border-color: #175591;
+}
+html.apdm-dark .btn-primary:hover,
+html.apdm-dark .btn-primary:focus,
+html.apdm-dark .btn-primary.focus {
+  color: #ffffff;
+  background-color: #2480cf;
+  border-color: #2f93e0;
+}
+
+html.apdm-dark .btn-success {
+  color: #ffffff;
+  background-color: #35794a;
+  border-color: #2c643d;
+}
+html.apdm-dark .btn-success:hover,
+html.apdm-dark .btn-success:focus {
+  color: #ffffff;
+  background-color: #3f8f56;
+  border-color: #35794a;
+}
+
+html.apdm-dark .btn-info {
+  color: #ffffff;
+  background-color: #2391b8;
+  border-color: #1d7d9f;
+}
+html.apdm-dark .btn-info:hover,
+html.apdm-dark .btn-info:focus {
+  color: #ffffff;
+  background-color: #2aa6cf;
+  border-color: #2391b8;
+}
+
+html.apdm-dark .btn-warning {
+  color: #1d1608;
+  background-color: #d69a35;
+  border-color: #c28a2c;
+}
+html.apdm-dark .btn-warning:hover,
+html.apdm-dark .btn-warning:focus {
+  color: #1d1608;
+  background-color: #e3a843;
+  border-color: #d69a35;
+}
+
+html.apdm-dark .btn-danger {
+  color: #ffffff;
+  background-color: #b94340;
+  border-color: #a03a37;
+}
+html.apdm-dark .btn-danger:hover,
+html.apdm-dark .btn-danger:focus {
+  color: #ffffff;
+  background-color: #d0524e;
+  border-color: #b94340;
+}
+
+html.apdm-dark .btn-link {
+  color: var(--apdm-link);
+}
+html.apdm-dark .btn-link:hover {
+  color: var(--apdm-link-hover);
+}
+
+html.apdm-dark .btn.disabled,
+html.apdm-dark .btn[disabled],
+html.apdm-dark fieldset[disabled] .btn {
+  color: var(--apdm-muted);
+  background-color: #1c2434;
+  border-color: var(--apdm-border);
+  opacity: 0.65;
+}
+
+/* Site-specific resume buttons */
+html.apdm-dark .btn-resume-submit {
+  background-color: #7a5c3a !important;
+  color: #ffffff !important;
+}
+html.apdm-dark .btn-resume-cancel {
+  background-color: #b55a2e !important;
+  color: #ffffff !important;
+}
+
+/* Green consent button on the disclaimer screen */
+html.apdm-dark .agree-btn {
+  background-color: #2e7d43;
+  color: #ffffff;
+}
+html.apdm-dark .agree-btn:hover {
+  background-color: #35904d;
+}
+
+/* ---------------------------------------------------------------------------
+   8. Forms
+   ------------------------------------------------------------------------- */
+html.apdm-dark .form-control,
+html.apdm-dark input[type="text"],
+html.apdm-dark input[type="password"],
+html.apdm-dark input[type="email"],
+html.apdm-dark input[type="number"],
+html.apdm-dark input[type="search"],
+html.apdm-dark input[type="tel"],
+html.apdm-dark input[type="url"],
+html.apdm-dark input[type="date"],
+html.apdm-dark textarea,
+html.apdm-dark select {
+  color: var(--apdm-text);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border-strong);
+  caret-color: var(--apdm-text);
+}
+
+html.apdm-dark .form-control::placeholder {
+  color: #6d7d94;
+  opacity: 1;
+}
+
+html.apdm-dark .form-control:focus {
+  border-color: var(--apdm-link);
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3),
+              0 0 6px rgba(100, 181, 246, 0.35);
+}
+
+html.apdm-dark .form-control[disabled],
+html.apdm-dark .form-control[readonly],
+html.apdm-dark fieldset[disabled] .form-control {
+  background-color: #1c2434;
+  color: var(--apdm-muted);
+  opacity: 0.7;
+}
+
+/* Dark autofill (Chrome fills yellow-ish otherwise) */
+html.apdm-dark input:-webkit-autofill,
+html.apdm-dark input:-webkit-autofill:hover,
+html.apdm-dark input:-webkit-autofill:focus,
+html.apdm-dark textarea:-webkit-autofill,
+html.apdm-dark select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--apdm-input-bg) inset !important;
+  -webkit-text-fill-color: var(--apdm-text) !important;
+  caret-color: var(--apdm-text);
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+html.apdm-dark .input-group-addon {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-elevated);
+  border-color: var(--apdm-border-strong);
+}
+
+html.apdm-dark input[type="checkbox"],
+html.apdm-dark input[type="radio"] {
+  accent-color: var(--apdm-primary);
+  filter: none;
+}
+
+html.apdm-dark .field-validation-error,
+html.apdm-dark .validation-summary-errors {
+  color: #ff8a80 !important;
+}
+
+html.apdm-dark .field-validation-valid,
+html.apdm-dark .validation-summary-valid {
+  display: none;
+}
+
+html.apdm-dark label {
+  color: var(--apdm-text-dim);
+}
+
+/* Buttons that also carry .form-control (site "Search" buttons) — restore
+   their variant colors, since .form-control rules above would otherwise
+   repaint them as plain input fields. */
+html.apdm-dark .btn.form-control,
+html.apdm-dark button.form-control {
+  width: auto;
+}
+html.apdm-dark .btn-primary.form-control,
+html.apdm-dark .btn-primary.form-control:focus {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+  border-color: #175591;
+}
+html.apdm-dark .btn-info.form-control,
+html.apdm-dark .btn-info.form-control:focus {
+  color: #ffffff;
+  background-color: #2391b8;
+  border-color: #1d7d9f;
+}
+html.apdm-dark .btn-success.form-control,
+html.apdm-dark .btn-success.form-control:focus {
+  color: #ffffff;
+  background-color: #35794a;
+  border-color: #2c643d;
+}
+html.apdm-dark .btn-danger.form-control,
+html.apdm-dark .btn-danger.form-control:focus {
+  color: #ffffff;
+  background-color: #b94340;
+  border-color: #a03a37;
+}
+html.apdm-dark .btn-default.form-control,
+html.apdm-dark .btn-default.form-control:focus {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border-strong);
+}
+
+html.apdm-dark .has-error .form-control,
+html.apdm-dark .has-error .input-group-addon {
+  border-color: #d0524e;
+}
+html.apdm-dark .has-error .control-label,
+html.apdm-dark .has-error .help-block {
+  color: #f28b8b;
+}
+html.apdm-dark .has-success .control-label,
+html.apdm-dark .has-success .help-block { color: #7fd68f; }
+html.apdm-dark .has-warning .control-label,
+html.apdm-dark .has-warning .help-block { color: #e5c558; }
+
+/* ---------------------------------------------------------------------------
+   9. Tables
+   ------------------------------------------------------------------------- */
+html.apdm-dark .table > thead > tr > th,
+html.apdm-dark .table > tbody > tr > th,
+html.apdm-dark .table > tfoot > tr > th,
+html.apdm-dark .table > thead > tr > td,
+html.apdm-dark .table > tbody > tr > td,
+html.apdm-dark .table > tfoot > tr > td {
+  border-top-color: var(--apdm-border);
+  color: var(--apdm-text-dim);
+}
+
+html.apdm-dark .table > thead > tr > th {
+  color: var(--apdm-text);
+  background-color: var(--apdm-surface-2);
+  border-bottom: 2px solid var(--apdm-border-strong);
+}
+
+html.apdm-dark .table > caption + thead > tr:first-child > th,
+html.apdm-dark .table > colgroup + thead > tr:first-child > th,
+html.apdm-dark .table > thead:first-child > tr:first-child > th,
+html.apdm-dark .table > caption + thead > tr:first-child > td,
+html.apdm-dark .table > colgroup + thead > tr:first-child > td,
+html.apdm-dark .table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+
+html.apdm-dark .table-bordered {
+  border-color: var(--apdm-border);
+}
+html.apdm-dark .table-bordered > thead > tr > th,
+html.apdm-dark .table-bordered > thead > tr > td,
+html.apdm-dark .table-bordered > tbody > tr > th,
+html.apdm-dark .table-bordered > tbody > tr > td,
+html.apdm-dark .table-bordered > tfoot > tr > th,
+html.apdm-dark .table-bordered > tfoot > tr > td {
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #171f2d;
+}
+html.apdm-dark .table-hover > tbody > tr:hover {
+  background-color: var(--apdm-elevated);
+}
+
+html.apdm-dark .table-hover > tbody > tr:hover > td,
+html.apdm-dark .table-hover > tbody > tr:hover > th {
+  background-color: transparent;
+}
+
+/* Sticky headers must stay opaque or rows show through */
+html.apdm-dark .table-fixed-header,
+html.apdm-dark .fixed-header,
+html.apdm-dark th.table-fixed-header,
+html.apdm-dark th.fixed-header {
+  background-color: var(--apdm-surface-2);
+}
+
+html.apdm-dark table caption,
+html.apdm-dark .table caption {
+  color: var(--apdm-text);
+  background: var(--apdm-surface-2);
+  border-top: 1px solid var(--apdm-border);
+  border-bottom: 1px solid var(--apdm-border);
+}
+
+html.apdm-dark tfoot.table-footer,
+html.apdm-dark tfoot.table-footer a {
+  color: #ffffff;
+}
+
+/* DataTables widgets (Library "Search Result") */
+html.apdm-dark .dataTables_wrapper {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .dataTables_wrapper .dataTables_filter input,
+html.apdm-dark .dataTables_wrapper .dataTables_length select {
+  color: var(--apdm-text);
+  background-color: var(--apdm-input-bg);
+  border: 1px solid var(--apdm-border-strong);
+}
+html.apdm-dark .dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: var(--apdm-link) !important;
+}
+html.apdm-dark .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: #ffffff !important;
+  background: var(--apdm-primary);
+  border-color: var(--apdm-primary);
+}
+html.apdm-dark .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  color: #ffffff !important;
+  background: var(--apdm-primary);
+  border-color: var(--apdm-primary);
+}
+html.apdm-dark .dataTables_wrapper .dataTables_info,
+html.apdm-dark .dataTables_wrapper .dataTables_empty {
+  color: var(--apdm-muted);
+}
+
+/* Class schedule rows */
+html.apdm-dark .scheduleTable .row {
+  border-top: 1px solid #253044;
+}
+html.apdm-dark .scheduleTable .row:first-child {
+  border-top: none;
+}
+
+/* ---------------------------------------------------------------------------
+   10. Alerts
+   ------------------------------------------------------------------------- */
+html.apdm-dark .alert-success {
+  color: #8fd694;
+  background-color: #14301c;
+  border-color: #1e4a2b;
+}
+html.apdm-dark .alert-info {
+  color: #7fc8e8;
+  background-color: #0f2a38;
+  border-color: #1c4557;
+}
+html.apdm-dark .alert-warning {
+  color: #e5c558;
+  background-color: #332a12;
+  border-color: #4d3f1a;
+}
+html.apdm-dark .alert-danger {
+  color: #f08a8a;
+  background-color: #3a1a1a;
+  border-color: #54262a;
+}
+html.apdm-dark .alert .alert-link {
+  color: var(--apdm-link);
+}
+/* The site force-sets some alerts to `color: black` inline — undo it. */
+html.apdm-dark .alert[style*="black"],
+html.apdm-dark .alert-warning[style*="color"] {
+  color: #e5c558 !important;
+}
+html.apdm-dark .alert-warning a,
+html.apdm-dark .alert[style*="black"] a {
+  color: var(--apdm-link) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   11. Labels & badges
+   ------------------------------------------------------------------------- */
+html.apdm-dark .label {
+  color: #ffffff;
+}
+html.apdm-dark .label-default { background-color: #55637a; }
+html.apdm-dark .label-primary { background-color: #2e78b8; }
+html.apdm-dark .label-success { background-color: #3f8f52; }
+html.apdm-dark .label-info    { background-color: #2a8fb5; }
+html.apdm-dark .label-warning { background-color: #b98a2f; }
+html.apdm-dark .label-danger  { background-color: #c05252; }
+
+html.apdm-dark .badge {
+  color: #e7ecf3;
+  background-color: #55637a;
+}
+
+/* ---------------------------------------------------------------------------
+   12. Modals, drawers & overlays
+   ------------------------------------------------------------------------- */
+html.apdm-dark .modal-content {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+  border: 1px solid var(--apdm-border-strong);
+}
+
+html.apdm-dark .modal-header,
+html.apdm-dark .modal-footer {
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .modal-backdrop.in {
+  opacity: 0.65;
+}
+
+html.apdm-dark #backOpacity {
+  background: #000000;
+  opacity: 0.65;
+}
+
+/* Loading spinner box */
+html.apdm-dark #dvLoading {
+  background-color: var(--apdm-surface);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Drawer component */
+html.apdm-dark .drawer {
+  background-color: var(--apdm-surface);
+  color: var(--apdm-text);
+}
+html.apdm-dark .drawer .drawer-contents {
+  background-color: var(--apdm-surface);
+  color: var(--apdm-text);
+}
+html.apdm-dark .drawer-inverse .drawer-contents {
+  background-color: #10161f;
+  color: var(--apdm-text);
+}
+html.apdm-dark .drawer-nav li a,
+html.apdm-dark .drawer-fullnav li a {
+  color: var(--apdm-text-dim);
+  background-color: transparent;
+}
+html.apdm-dark .drawer-nav li.active a,
+html.apdm-dark .drawer-nav li a:hover,
+html.apdm-dark .drawer-fullnav li.active a,
+html.apdm-dark .drawer-fullnav li a:hover {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+}
+html.apdm-dark .drawer-footer {
+  background-color: var(--apdm-surface-2);
+  border-top: 1px solid var(--apdm-border);
+}
+html.apdm-dark .drawer-menu-link {
+  color: var(--apdm-link);
+}
+
+/* ---------------------------------------------------------------------------
+   13. Dropdown menus
+   ------------------------------------------------------------------------- */
+html.apdm-dark .dropdown-menu {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+  border-color: var(--apdm-border-strong);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+html.apdm-dark .dropdown-menu > li > a {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .dropdown-menu > li > a:hover,
+html.apdm-dark .dropdown-menu > li > a:focus {
+  color: var(--apdm-text);
+  background-color: #26334a;
+}
+
+html.apdm-dark .dropdown-header {
+  color: var(--apdm-muted);
+}
+
+html.apdm-dark .divider {
+  background-color: var(--apdm-border);
+}
+
+/* Drunken-parrot dropdown arrows */
+html.apdm-dark .navbar .dropdown-menu {
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .navbar .dropdown-menu > li > a {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .navbar .dropdown-menu > li > a:hover {
+  background-color: #26334a;
+  color: var(--apdm-text);
+}
+html.apdm-dark .navbar .dropdown-menu > .top.arrow {
+  border-bottom-color: var(--apdm-border-strong);
+}
+html.apdm-dark .navbar .dropdown-menu > .top.arrow:after {
+  border-bottom-color: var(--apdm-elevated);
+}
+html.apdm-dark .navbar-nav .dropdown-menu {
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .navbar-nav .dropdown-menu > .top.arrow {
+  border-bottom-color: var(--apdm-border-strong);
+}
+html.apdm-dark .navbar-nav .dropdown-menu > .top.arrow:after {
+  border-bottom-color: var(--apdm-elevated);
+}
+
+/* ---------------------------------------------------------------------------
+   14. Nav tabs / pills / pagination / breadcrumbs
+   ------------------------------------------------------------------------- */
+html.apdm-dark .nav-tabs {
+  border-bottom-color: var(--apdm-border);
+}
+html.apdm-dark .nav-tabs > li > a:hover {
+  border-color: transparent;
+  background-color: transparent;
+}
+html.apdm-dark .nav-tabs > li.active > a,
+html.apdm-dark .nav-tabs > li.active > a:hover,
+html.apdm-dark .nav-tabs > li.active > a:focus {
+  color: var(--apdm-text);
+  background-color: var(--apdm-surface);
+  border-color: var(--apdm-border-strong) var(--apdm-border-strong) transparent;
+}
+html.apdm-dark .nav-pills > li > a {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .nav-pills > li > a:hover {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+}
+html.apdm-dark .nav-pills > li.active > a,
+html.apdm-dark .nav-pills > li.active > a:hover,
+html.apdm-dark .nav-pills > li.active > a:focus {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+}
+
+html.apdm-dark .pagination > li > a,
+html.apdm-dark .pagination > li > span {
+  color: var(--apdm-link);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .pagination > li > a:hover,
+html.apdm-dark .pagination > li > span:hover {
+  color: var(--apdm-link-hover);
+  background-color: var(--apdm-elevated);
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .pagination > .active > a,
+html.apdm-dark .pagination > .active > span {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+  border-color: var(--apdm-primary);
+}
+html.apdm-dark .pagination > .disabled > a,
+html.apdm-dark .pagination > .disabled > span {
+  color: var(--apdm-muted);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .pager li > a,
+html.apdm-dark .pager li > span {
+  color: var(--apdm-link);
+  background-color: var(--apdm-input-bg);
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .pager li > a:hover {
+  background-color: var(--apdm-elevated);
+}
+
+html.apdm-dark .breadcrumb {
+  color: var(--apdm-muted);
+  background-color: var(--apdm-surface-2);
+}
+html.apdm-dark .breadcrumb > li + li:before {
+  color: var(--apdm-muted);
+}
+html.apdm-dark .breadcrumb > .active {
+  color: var(--apdm-text-dim);
+}
+
+/* ---------------------------------------------------------------------------
+   15. Wells, thumbnails, progress, list-groups, media
+   ------------------------------------------------------------------------- */
+html.apdm-dark .well,
+html.apdm-dark .well pre {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-surface-2);
+  border-color: var(--apdm-border);
+}
+
+html.apdm-dark .thumbnail {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-surface);
+  border-color: var(--apdm-border);
+}
+html.apdm-dark .thumbnail .caption {
+  color: var(--apdm-text-dim);
+}
+
+html.apdm-dark .progress {
+  background-color: var(--apdm-surface-2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+html.apdm-dark .progress-bar {
+  background-color: var(--apdm-primary);
+}
+html.apdm-dark .progress-bar-success { background-color: #35794a; }
+html.apdm-dark .progress-bar-info    { background-color: #2391b8; }
+html.apdm-dark .progress-bar-warning { background-color: #d69a35; }
+html.apdm-dark .progress-bar-danger  { background-color: #b94340; }
+
+html.apdm-dark .list-group-item {
+  color: var(--apdm-text-dim);
+  background-color: var(--apdm-surface);
+  border-color: var(--apdm-border);
+}
+html.apdm-dark a.list-group-item:hover,
+html.apdm-dark button.list-group-item:hover,
+html.apdm-dark a.list-group-item:focus {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+}
+html.apdm-dark .list-group-item.active,
+html.apdm-dark .list-group-item.active:hover,
+html.apdm-dark .list-group-item.active:focus {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+  border-color: var(--apdm-primary);
+}
+html.apdm-dark .list-group-item.disabled {
+  color: var(--apdm-muted);
+  background-color: var(--apdm-surface-2);
+}
+
+/* ---------------------------------------------------------------------------
+   16. Tooltip / popover / close / jumbotron / carousel
+   ------------------------------------------------------------------------- */
+html.apdm-dark .tooltip-inner {
+  color: var(--apdm-text);
+  background-color: #0a0f16;
+}
+html.apdm-dark.tooltip.top .tooltip-arrow       { border-top-color: #0a0f16; }
+html.apdm-dark.tooltip.bottom .tooltip-arrow    { border-bottom-color: #0a0f16; }
+html.apdm-dark.tooltip.left .tooltip-arrow      { border-left-color: #0a0f16; }
+html.apdm-dark.tooltip.right .tooltip-arrow     { border-right-color: #0a0f16; }
+
+html.apdm-dark .popover {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .popover-title {
+  background-color: var(--apdm-surface-2);
+  border-bottom-color: var(--apdm-border);
+}
+html.apdm-dark .popover.top > .arrow   { border-top-color: var(--apdm-border-strong); }
+html.apdm-dark .popover.top > .arrow:after { border-top-color: var(--apdm-elevated); }
+html.apdm-dark .popover.bottom > .arrow { border-bottom-color: var(--apdm-border-strong); }
+html.apdm-dark .popover.bottom > .arrow:after { border-bottom-color: var(--apdm-elevated); }
+html.apdm-dark .popover.left > .arrow  { border-right-color: var(--apdm-border-strong); }
+html.apdm-dark .popover.left > .arrow:after { border-right-color: var(--apdm-elevated); }
+html.apdm-dark .popover.right > .arrow { border-left-color: var(--apdm-border-strong); }
+html.apdm-dark .popover.right > .arrow:after { border-left-color: var(--apdm-elevated); }
+
+html.apdm-dark .close,
+html.apdm-dark .close:hover,
+html.apdm-dark .close:focus {
+  color: var(--apdm-text);
+  text-shadow: none;
+  opacity: 0.75;
+}
+html.apdm-dark .close:hover { opacity: 1; }
+
+html.apdm-dark .jumbotron {
+  color: var(--apdm-text);
+  background-color: var(--apdm-surface-2);
+}
+
+html.apdm-dark .carousel-control.left,
+html.apdm-dark .carousel-control.right {
+  background-image: none;
+}
+html.apdm-dark .carousel-indicators li {
+  border-color: var(--apdm-border-strong);
+}
+html.apdm-dark .carousel-caption {
+  color: var(--apdm-text);
+}
+
+/* ---------------------------------------------------------------------------
+   17. Page scaffolding & site-specific pieces
+   ------------------------------------------------------------------------- */
+html.apdm-dark #main-content {
+  border-color: var(--apdm-border);
+}
+
+/* Result grids (Grade Report print-style blocks) */
+html.apdm-dark .result-outline-bg {
+  background-color: #1a2340;
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .result-outline-bg .exam-result-outline-bg {
+  background-color: #212c42;
+}
+html.apdm-dark .result-outline-bg .section-result-outline-bg {
+  background-color: #2b3850;
+}
+html.apdm-dark .element-result {
+  background-color: #222c3e;
+}
+
+/* Course list cards */
+html.apdm-dark .course-list-panel {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .StudentCourseList .course-list-panel {
+  color: var(--apdm-text-dim);
+}
+
+/* Rating widgets */
+html.apdm-dark .rating,
+html.apdm-dark .rating li {
+  color: #5c6a80;
+}
+html.apdm-dark .rating .filled {
+  color: #ff8c42;
+}
+html.apdm-dark .emoji-rating-label,
+html.apdm-dark .emoji-rating-label-active {
+  color: var(--apdm-text-dim);
+}
+html.apdm-dark .emoji-rating-label-inactive {
+  color: #5c6a80;
+}
+html.apdm-dark .emoji-rating li:hover .emoji-rating-label {
+  color: var(--apdm-text);
+}
+
+/* ---------------------------------------------------------------------------
+   18. Login page
+   ------------------------------------------------------------------------- */
+html.apdm-dark .login-form {
+  background-color: var(--apdm-surface);
+  border: 1px solid var(--apdm-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+}
+
+html.apdm-dark .login_header {
+  color: var(--apdm-text-dim);
+}
+
+html.apdm-dark .login_forgotpassword a {
+  color: var(--apdm-link);
+}
+
+html.apdm-dark .aiub_title {
+  color: var(--apdm-text);
+}
+
+html.apdm-dark .aiub_slogan {
+  color: var(--apdm-muted);
+}
+
+html.apdm-dark .login-form blockquote {
+  border-left-color: var(--apdm-border);
+}
+
+/* Dim the campus photo behind the login panel */
+html.apdm-dark .login_left {
+  filter: brightness(0.72) saturate(0.85);
+}
+
+/* Captcha image keeps its white paper look for legibility */
+html.apdm-dark img#CaptchaImage {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   19. Bootstrap datepicker
+   ------------------------------------------------------------------------- */
+html.apdm-dark .datepicker {
+  color: var(--apdm-text);
+  background-color: var(--apdm-elevated);
+  border: 1px solid var(--apdm-border-strong);
+}
+html.apdm-dark .datepicker table tr td.day:hover,
+html.apdm-dark .datepicker table tr td.day.focused {
+  background: #26334a;
+}
+html.apdm-dark .datepicker table tr td.old,
+html.apdm-dark .datepicker table tr td.new {
+  color: var(--apdm-muted);
+}
+html.apdm-dark .datepicker table tr td.disabled,
+html.apdm-dark .datepicker table tr td.disabled:hover {
+  color: var(--apdm-muted);
+  background: none;
+}
+html.apdm-dark .datepicker table tr td.today,
+html.apdm-dark .datepicker table tr td.today:hover {
+  background-color: #4d3f1a;
+  border-color: #e5c558;
+}
+html.apdm-dark .datepicker table tr td.active,
+html.apdm-dark .datepicker table tr td.active:hover,
+html.apdm-dark .datepicker table tr td span.active,
+html.apdm-dark .datepicker table tr td span.active:hover {
+  color: #ffffff;
+  background-color: var(--apdm-primary);
+  border-color: #175591;
+}
+html.apdm-dark .datepicker table tr td span:hover {
+  background: #26334a;
+}
+html.apdm-dark .datepicker thead tr:first-child th,
+html.apdm-dark .datepicker thead tr:first-child th:hover {
+  background: var(--apdm-surface-2);
+  color: var(--apdm-text);
+}
+html.apdm-dark .datepicker thead tr:last-child th {
+  color: var(--apdm-muted);
+}
+html.apdm-dark .datepicker-dropdown:before {
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+}
+html.apdm-dark .datepicker-dropdown:after {
+  border-bottom-color: var(--apdm-elevated);
+}
+html.apdm-dark .datepicker-dropdown.datepicker-orient-bottom:before {
+  border-top-color: rgba(0, 0, 0, 0.4);
+}
+html.apdm-dark .datepicker-dropdown.datepicker-orient-bottom:after {
+  border-top-color: var(--apdm-elevated);
+}
+
+/* ---------------------------------------------------------------------------
+   20. Icons & misc
+   ------------------------------------------------------------------------- */
+html.apdm-dark .icon-button {
+  background: var(--apdm-elevated);
+  border: 1px solid var(--apdm-border);
+}
+html.apdm-dark .icon-button > i {
+  color: var(--apdm-cyan);
+}
+html.apdm-dark .icon-button:hover {
+  background: var(--apdm-primary);
+}
+html.apdm-dark .icon-button:hover > i {
+  color: #ffffff;
+}
+
+html.apdm-dark .fa,
+html.apdm-dark .glyphicon {
+  /* font icons inherit color — nothing needed, kept for clarity */
+}
+
+/* Keep real photos and brand images untouched (no blanket filter). */
+
+/* ---------------------------------------------------------------------------
+   21. Print — always print light, like the original portal
+   ------------------------------------------------------------------------- */
+@media print {
+  html.apdm-dark,
+  html.apdm-dark body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  html.apdm-dark a {
+    color: #02baf2 !important;
+  }
+  html.apdm-dark h1, html.apdm-dark h2, html.apdm-dark h3,
+  html.apdm-dark h4, html.apdm-dark h5, html.apdm-dark h6,
+  html.apdm-dark p, html.apdm-dark td, html.apdm-dark th,
+  html.apdm-dark .table > tbody > tr > td,
+  html.apdm-dark .table > thead > tr > th {
+    color: #000000 !important;
+    background: transparent !important;
+  }
+  html.apdm-dark .table > thead > tr > th,
+  html.apdm-dark .table-bordered,
+  html.apdm-dark .table-bordered td,
+  html.apdm-dark .table-bordered th {
+    border-color: #ddd !important;
+  }
+  html.apdm-dark .panel {
+    background: #ffffff !important;
+    border-color: #d6e1e5 !important;
+  }
+  html.apdm-dark .panel-default > .panel-heading,
+  html.apdm-dark .panel-group .panel-heading {
+    background-color: #004EA2 !important;
+    color: #ffffff !important;
+  }
+  html.apdm-dark .panel-footer,
+  html.apdm-dark tfoot.table-footer {
+    background-color: #42A5F5 !important;
+    color: #ffffff !important;
+  }
+  html.apdm-dark .btn {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ccc !important;
+    text-shadow: none !important;
+  }
+  html.apdm-dark .navbar,
+  html.apdm-dark #navigation-bar,
+  html.apdm-dark .modal-backdrop,
+  html.apdm-dark #dvLoading {
+    display: none !important;
+  }
+}

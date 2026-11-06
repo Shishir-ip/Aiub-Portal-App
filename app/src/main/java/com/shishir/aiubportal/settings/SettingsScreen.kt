@@ -160,7 +160,7 @@ fun SettingsScreen(store: SettingsStore, onNoticesChanged: (Boolean, Int) -> Uni
             "AIUB Portal App v1.0.0 — an unofficial student app. " +
                 "The captcha solver and all credentials stay on your device. " +
                 "Not affiliated with or endorsed by AIUB.",
-            fontSize = 1 2.sp,
+            fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(Modifier.height(24.dp))
@@ -185,7 +185,7 @@ private fun ToggleRow(text: String, checked: Boolean, onChange: (Boolean) -> Uni
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text, fontSize = 1 3.sp, modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
+        Text(text, fontSize = 13.sp, modifier = Modifier.weight(1f), fontWeight = FontWeight.Medium)
         Spacer(Modifier.width(10.dp))
         Switch(checked = checked, onCheckedChange = onChange)
     }

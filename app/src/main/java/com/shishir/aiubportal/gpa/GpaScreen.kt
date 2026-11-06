@@ -117,7 +117,7 @@ fun GpaScreen(onBack: () -> Unit) {
                                             ) {
                                                 Box(
                                                     modifier = Modifier
-                                                        .fillMaxWidth(sem.averagePoints / 4.0)
+                                                        .fillMaxWidth((sem.averagePoints / 4.0).toFloat())
                                                         .height(10.dp)
                                                         .clip(RoundedCornerShape(5.dp))
                                                         .background(Color(0xFF38c1f2))
@@ -154,7 +154,7 @@ fun GpaScreen(onBack: () -> Unit) {
                                     ) {
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(row.code, fontSize = 11.sp, color = MaterialTheme.colorScheme.primary)
-                                            Text(row.name, fontSize = 1 3.sp, fontWeight = FontWeight.Medium)
+                                            Text(row.name, fontSize = 13.sp, fontWeight = FontWeight.Medium)
                                         }
                                         Text(
                                             row.grade,

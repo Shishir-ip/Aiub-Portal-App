@@ -30,14 +30,12 @@ data class GpaReport(
 
 class NotLoggedInException : Exception("Portal session expired")
 
-object GpaRepository {
+val gradePoints = mapOf(
+    "A+" to 4.00, "A" to 3.75, "A-" to 3.5, "B+" to 3.25, "B" to 3.0, "B-" to 2.75,
+    "C+" to 2.5, "C" to 2.25, "C-" to 2.0, "D+" to 1.75, "D" to 1.5, "F" to 0.0
+)
 
-    val gradePoints = mapOf(
-        "A+" to 4.00, "A" to 3.75, "A-" to 3.50,
-        "B+" to 3.25, "B" to 3.00, "B-" to 2.75,
-        "C+" to 2.50, "C" to 2.25, "C-" to 2.00,
-        "D+" to 1.75, "D" to 1.50, "F" to 0.00
-    )
+object GpaRepository {
 
     /** Fetches the dashboard to discover the grade-report link (session token). */
     fun gradeReportUrl(): String {

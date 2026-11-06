@@ -70,7 +70,7 @@ class SessionKeeper(private val context: Context) {
                 .replace("\\\"", "\"").replace("\\\\", "\\")
             if (!json.contains("\"hasForm\":true")) { done(); return@evaluateJavascript }
 
-            val src = Regex("\"captchaSrc\":\"([^\"]*)\"").find(json)?.groupValues[1] ?: ""
+            val src = Regex("\"captchaSrc\":\"([^\"]*)\"").find(json)?.groupValues?.get(1) ?: ""
 
             fun continueWithCaptcha() {
                 webView.post {

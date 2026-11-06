@@ -1,7 +1,9 @@
 package com.shishir.aiubportal.exam
 
 import com.shishir.aiubportal.util.Http
+import com.shishir.aiubportal.gpa.SessionGuard
 import org.jsoup.Jsoup
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -63,7 +65,7 @@ object ExamRepository {
                             formatter
                         )
                     } else if (dateMatch != null) {
-                        LocalDateTime.parse(dateMatch.value.replace("/", "-"), formatterDateOnly).atStartOfDay()
+                        LocalDate.parse(dateMatch.value.replace("/", "-"), formatterDateOnly).atStartOfDay()
                     } else null
                 }.getOrNull()
 

@@ -53,7 +53,7 @@ class FacultyAlertsWorker(context: Context, params: WorkerParameters) : Coroutin
             val link = el.closest("a[href]")?.attr("abs:href")
             NoticeNotifications.notify(
                 applicationContext, NoticeNotifications.FACULTY_CHANNEL_ID,
-                FacultyAlerts.hash(text).and(0x7fffffff),
+                text.hashCode().and(0x7fffffff),
                 "Portal update", text, link
             )
         }
