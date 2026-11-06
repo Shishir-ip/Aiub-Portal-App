@@ -37,21 +37,17 @@ faculty-upload alerts, a GPA dashboard and exam-routine countdowns.
 
 ## 📦 Install
 
-### Option A — build it yourself (recommended, 5 minutes)
+### ⚡ Install the APK (recommended, 1 minute)
 
-1. Install [Android Studio](https://developer.android.com/studio) (free).
-2. Download this repository (Code → Download ZIP) and extract it.
-3. In Android Studio: **Open** → select the extracted `Aiub-Portal-App` folder.
-4. Wait for Gradle sync to finish (first time downloads dependencies).
-5. Plug in your phone (USB debugging on) or start an emulator → press **Run ▶**.
+1. **[Download Aiub-Portal-App-v1.0.0.apk](https://github.com/Shishir-ip/Aiub-Portal-App/releases/download/v1.0.0/Aiub-Portal-App-v1.0.0.apk)**
+   from the Releases page.
+2. Open it on your phone (allow "install from unknown sources" if asked).
+3. Open the app → log in once → Settings → enable **Save my login details**
+   and **Auto re-login**. Done.
 
-> No Android Studio? With a JDK 17 installed you can also run
-> `./gradlew assembleDebug` — the APK lands in `app/build/outputs/apk/debug/`.
+Requires Android 10+.
 
-### Option B — release APK
-
-Check the [Releases](https://github.com/Shishir-ip/Aiub-Portal-App/releases)
-page for a prebuilt APK when available.
+### 🔧 Build from source
 
 ## ⚙️ First launch
 
